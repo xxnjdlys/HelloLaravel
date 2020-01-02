@@ -1,0 +1,565 @@
+#---------------------------------------------------#
+## 配置文件需要放置在 $HOME/.config/clash/*.yaml
+
+## 这份文件是clashX的基础配置文件，请尽量新建配置文件进行修改。
+## ！！！只有这份文件的端口设置会随ClashX启动生效
+
+## 如果您不知道如何操作，请参阅 SS-Rule-Snippet：https://github.com/Hackl0us/SS-Rule-Snippet/blob/master/LAZY_RULES/clash.yaml
+## 或者官方Github文档 https://github.com/Dreamacro/clash/blob/master/README.md
+#---------------------------------------------------#
+
+port: 1087 
+socks-port: 1080 
+allow-lan: true 
+mode: Rule
+log-level: info
+external-controller: 127.0.0.1:9090
+
+Proxy:
+# shadowsocks
+# 所支持的加密方式与 go-shadowsocks2 保持一致
+# 支持加密方式： 
+#   aes-128-gcm aes-192-gcm aes-256-gcm
+#   aes-128-cfb aes-192-cfb aes-256-cfb
+#   aes-128-ctr aes-192-ctr aes-256-ctr
+#   rc4-md5 chacha20 chacha20-ietf xchacha20
+#   chacha20-ietf-poly1305 xchacha20-ietf-poly1305
+
+# vmess://eyJ2IjoiMiIsInBzIjoiVjJyYXkgQmV0YSIsImFkZCI6IjE4NS4zNy4yNTMuMTUxIiwicG9ydCI6NDQzLCJpZCI6IjQ4Y2E0ZTRkLTk4ODMtNDNjYy1hMjYzLTI2ZDA3NzYzNTAyOCIsImFpZCI6NCwibmV0IjoidGNwIiwidHlwZSI6Im5vbmUiLCJob3N0IjoiIiwicGF0aCI6IlwvIiwidGxzIjoibm9uZSJ9
+
+- { name: "jp1", type: ss, server: "jp1-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+- { name: "jp2", type: ss, server: "jp2-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+- { name: "jp3", type: ss, server: "jp3-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+
+# - { name: "us1", type: ss, server: "us1-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+- { name: "us2", type: ss, server: "us2-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+- { name: "us3", type: ss, server: "us3-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+
+- { name: "hk1", type: ss, server: "hk1-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+- { name: "hk3", type: ss, server: "hk3-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+- { name: "hk5", type: ss, server: "hk5-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+
+- { name: "ru1", type: ss, server: "ru1-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+- { name: "au1", type: ss, server: "au1-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+- { name: "de1", type: ss, server: "de1-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+
+- { name: "nl1", type: ss, server: "nl1-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+- { name: "uk1", type: ss, server: "uk1-sta130.27262.pw", port: 60619, cipher: chacha20-ietf-poly1305, password: "P8A9sErkkfxTnfK", udp: true }
+
+# vmess
+# 支持加密方式：auto / aes-128-gcm / chacha20-poly1305 / none
+- { name: "vmess1", type: vmess, server: "185.37.253.151", port: 443, uuid: "48ca4e4d-9883-43cc-a263-26d077635028", alterId: 4, cipher: auto }
+
+# - name: "ss2"
+#   type: ss
+#   server: jp1-sta130.27262.pw
+#   port: 60619
+#   cipher: chacha20-ietf-poly1305
+#   password: P8A9sErkkfxTnfK
+#   plugin: obfs
+#   plugin-opts:
+#     mode: tls # 混淆模式，可以选择 http 或 tls
+#     host: bing.com # 混淆域名，需要和服务器配置保持一致
+
+Proxy Group:
+# select 用来允许用户手动选择 代理服务器 或 服务器组
+# 您也可以使用 RESTful API 去切换服务器，这种方式推荐在 GUI 中使用
+- { name: "Proxy", type: select, proxies: ["jp1", "jp2","jp3","us2","us3","hk1","hk3","hk5","ru1","de1","au1","nl1","uk1","vmess1"],url: "https://www.google.com", interval: 300  }
+
+# url-test 可以自动选择与指定 URL 测速后，延迟最短的服务器
+- { name: "Auto", type: url-test, proxies: ["vmess1","jp1", "jp2","jp3","us2","us3","hk1","hk3","hk5","ru1","de1","au1","nl1","uk1" ], url: "https://www.google.com", interval: 300 }
+
+# fallback 可以尽量按照用户书写的服务器顺序，在确保服务器可用的情况下，自动选择服务器
+# - { name: "fallback-auto", type: fallback, proxies: ["jp1", "jp2","jp3","us1","us2","us3","hk1","hk3","hk5","ru1","de1","au1","nl1","uk1","vmess1"  ], url: "https://www.google.com", interval: 300 }
+
+# load-balance 可以使相同 eTLD 请求在同一条代理线路上
+# - { name: "load-balance", type: load-balance, proxies: ["jp1", "jp2","jp3","us1","us2","us3","hk1","hk3","hk5","ru1","de1","au1","nl1","uk1","vmess1"  ],url: "https://www.google.com", interval: 300  }
+
+
+Rule:
+# Apple
+# - DOMAIN-SUFFIX,apps.apple.com,Proxy
+# - DOMAIN-SUFFIX,itunes.apple.com,Proxy
+# - DOMAIN-SUFFIX,blobstore.apple.com,Proxy
+# - DOMAIN-SUFFIX,music.apple.com,DIRECT
+# - DOMAIN-SUFFIX,icloud.com,DIRECT
+# - DOMAIN-SUFFIX,icloud-content.com,DIRECT
+# - DOMAIN-SUFFIX,me.com,DIRECT
+# - DOMAIN-SUFFIX,mzstatic.com,DIRECT
+# - DOMAIN-SUFFIX,akadns.net,DIRECT
+# - DOMAIN-SUFFIX,aaplimg.com,DIRECT
+# - DOMAIN-SUFFIX,cdn-apple.com,DIRECT
+# - DOMAIN-SUFFIX,apple.com,DIRECT
+# - DOMAIN-SUFFIX,apple-cloudkit.com,DIRECT
+# 注释。注释此选项有助于大多数App开发者分析崩溃信息；如果您拒绝一切崩溃数据统计、搜集，请取消 
+# - DOMAIN,e.crashlytics.com,REJECT 
+
+# 自定义规则
+## 您可以在此处插入您补充的自定义规则
+
+# 国内网站
+- DOMAIN-SUFFIX,cn,DIRECT
+- DOMAIN-KEYWORD,-cn,DIRECT
+- DOMAIN-SUFFIX,126.com,DIRECT
+- DOMAIN-SUFFIX,126.net,DIRECT
+- DOMAIN-SUFFIX,127.net,DIRECT
+- DOMAIN-SUFFIX,163.com,DIRECT
+- DOMAIN-SUFFIX,360buyimg.com,DIRECT
+- DOMAIN-SUFFIX,36kr.com,DIRECT
+- DOMAIN-SUFFIX,acfun.tv,DIRECT
+- DOMAIN-SUFFIX,air-matters.com,DIRECT
+- DOMAIN-SUFFIX,aixifan.com,DIRECT
+- DOMAIN-SUFFIX,akamaized.net,DIRECT
+- DOMAIN-KEYWORD,alicdn,DIRECT
+- DOMAIN-KEYWORD,alipay,DIRECT
+- DOMAIN-KEYWORD,taobao,DIRECT
+- DOMAIN-SUFFIX,amap.com,DIRECT
+- DOMAIN-SUFFIX,autonavi.com,DIRECT
+- DOMAIN-KEYWORD,baidu,DIRECT
+- DOMAIN-SUFFIX,bdimg.com,DIRECT
+- DOMAIN-SUFFIX,bdstatic.com,DIRECT
+- DOMAIN-SUFFIX,bilibili.com,DIRECT
+- DOMAIN-SUFFIX,caiyunapp.com,DIRECT
+- DOMAIN-SUFFIX,clouddn.com,DIRECT
+- DOMAIN-SUFFIX,cnbeta.com,DIRECT
+- DOMAIN-SUFFIX,cnbetacdn.com,DIRECT
+- DOMAIN-SUFFIX,cootekservice.com,DIRECT
+- DOMAIN-SUFFIX,csdn.net,DIRECT
+- DOMAIN-SUFFIX,ctrip.com,DIRECT
+- DOMAIN-SUFFIX,dgtle.com,DIRECT
+- DOMAIN-SUFFIX,dianping.com,DIRECT
+- DOMAIN-SUFFIX,douban.com,DIRECT
+- DOMAIN-SUFFIX,doubanio.com,DIRECT
+- DOMAIN-SUFFIX,duokan.com,DIRECT
+- DOMAIN-SUFFIX,easou.com,DIRECT
+- DOMAIN-SUFFIX,ele.me,DIRECT
+- DOMAIN-SUFFIX,feng.com,DIRECT
+- DOMAIN-SUFFIX,fir.im,DIRECT
+- DOMAIN-SUFFIX,frdic.com,DIRECT
+- DOMAIN-SUFFIX,g-cores.com,DIRECT
+- DOMAIN-SUFFIX,godic.net,DIRECT
+- DOMAIN-SUFFIX,gtimg.com,DIRECT
+- DOMAIN,cdn.hockeyapp.net,DIRECT
+- DOMAIN-SUFFIX,hongxiu.com,DIRECT
+- DOMAIN-SUFFIX,hxcdn.net,DIRECT
+- DOMAIN-SUFFIX,iciba.com,DIRECT
+- DOMAIN-SUFFIX,ifeng.com,DIRECT
+- DOMAIN-SUFFIX,ifengimg.com,DIRECT
+- DOMAIN-SUFFIX,ipip.net,DIRECT
+- DOMAIN-SUFFIX,iqiyi.com,DIRECT
+- DOMAIN-SUFFIX,jd.com,DIRECT
+- DOMAIN-SUFFIX,jianshu.com,DIRECT
+- DOMAIN-SUFFIX,knewone.com,DIRECT
+- DOMAIN-SUFFIX,le.com,DIRECT
+
+- DOMAIN-SUFFIX,lecloud.com,DIRECT
+- DOMAIN-SUFFIX,lemicp.com,DIRECT
+- DOMAIN-SUFFIX,licdn.com,DIRECT
+- DOMAIN-SUFFIX,linkedin.com,DIRECT
+- DOMAIN-SUFFIX,luoo.net,DIRECT
+- DOMAIN-SUFFIX,meituan.com,DIRECT
+- DOMAIN-SUFFIX,meituan.net,DIRECT
+- DOMAIN-SUFFIX,mi.com,DIRECT
+- DOMAIN-SUFFIX,miaopai.com,DIRECT
+- DOMAIN-SUFFIX,microsoft.com,DIRECT
+- DOMAIN-SUFFIX,microsoftonline.com,DIRECT
+- DOMAIN-SUFFIX,miui.com,DIRECT
+- DOMAIN-SUFFIX,miwifi.com,DIRECT
+- DOMAIN-SUFFIX,mob.com,DIRECT
+- DOMAIN-SUFFIX,netease.com,DIRECT
+- DOMAIN-SUFFIX,office.com,DIRECT
+- DOMAIN-SUFFIX,office365.com,DIRECT
+- DOMAIN-KEYWORD,officecdn,DIRECT
+- DOMAIN-SUFFIX,oschina.net,DIRECT
+- DOMAIN-SUFFIX,ppsimg.com,DIRECT
+- DOMAIN-SUFFIX,pstatp.com,DIRECT
+- DOMAIN-SUFFIX,qcloud.com,DIRECT
+- DOMAIN-SUFFIX,qdaily.com,DIRECT
+- DOMAIN-SUFFIX,qdmm.com,DIRECT
+- DOMAIN-SUFFIX,qhimg.com,DIRECT
+- DOMAIN-SUFFIX,qhres.com,DIRECT
+- DOMAIN-SUFFIX,qidian.com,DIRECT
+- DOMAIN-SUFFIX,qihucdn.com,DIRECT
+- DOMAIN-SUFFIX,qiniu.com,DIRECT
+- DOMAIN-SUFFIX,qiniucdn.com,DIRECT
+- DOMAIN-SUFFIX,qiyipic.com,DIRECT
+- DOMAIN-SUFFIX,qq.com,DIRECT
+- DOMAIN-SUFFIX,qqurl.com,DIRECT
+- DOMAIN-SUFFIX,rarbg.to,DIRECT
+- DOMAIN-SUFFIX,ruguoapp.com,DIRECT
+- DOMAIN-SUFFIX,segmentfault.com,DIRECT
+- DOMAIN-SUFFIX,sinaapp.com,DIRECT
+- DOMAIN-SUFFIX,smzdm.com,DIRECT
+- DOMAIN-SUFFIX,snapdrop.net,DIRECT
+- DOMAIN-SUFFIX,sogou.com,DIRECT
+- DOMAIN-SUFFIX,sogoucdn.com,DIRECT
+- DOMAIN-SUFFIX,sohu.com,DIRECT
+- DOMAIN-SUFFIX,soku.com,DIRECT
+- DOMAIN-SUFFIX,speedtest.net,DIRECT
+- DOMAIN-SUFFIX,sspai.com,DIRECT
+- DOMAIN-SUFFIX,suning.com,DIRECT
+- DOMAIN-SUFFIX,taobao.com,DIRECT
+- DOMAIN-SUFFIX,tencent.com,DIRECT
+- DOMAIN-SUFFIX,tenpay.com,DIRECT
+- DOMAIN-SUFFIX,tianyancha.com,DIRECT
+- DOMAIN-SUFFIX,tmall.com,DIRECT
+- DOMAIN-SUFFIX,tudou.com,DIRECT
+- DOMAIN-SUFFIX,umetrip.com,DIRECT
+- DOMAIN-SUFFIX,upaiyun.com,DIRECT
+- DOMAIN-SUFFIX,upyun.com,DIRECT
+- DOMAIN-SUFFIX,veryzhun.com,DIRECT
+- DOMAIN-SUFFIX,weather.com,DIRECT
+- DOMAIN-SUFFIX,weibo.com,DIRECT
+- DOMAIN-SUFFIX,xiami.com,DIRECT
+- DOMAIN-SUFFIX,xiami.net,DIRECT
+- DOMAIN-SUFFIX,xiaomicp.com,DIRECT
+- DOMAIN-SUFFIX,ximalaya.com,DIRECT
+- DOMAIN-SUFFIX,xmcdn.com,DIRECT
+- DOMAIN-SUFFIX,xunlei.com,DIRECT
+- DOMAIN-SUFFIX,yhd.com,DIRECT
+- DOMAIN-SUFFIX,yihaodianimg.com,DIRECT
+- DOMAIN-SUFFIX,yinxiang.com,DIRECT
+- DOMAIN-SUFFIX,ykimg.com,DIRECT
+- DOMAIN-SUFFIX,youdao.com,DIRECT
+- DOMAIN-SUFFIX,youku.com,DIRECT
+- DOMAIN-SUFFIX,zealer.com,DIRECT
+- DOMAIN-SUFFIX,zhihu.com,DIRECT
+- DOMAIN-SUFFIX,zhimg.com,DIRECT
+- DOMAIN-SUFFIX,zimuzu.tv,DIRECT
+- DOMAIN-SUFFIX,zoho.com,DIRECT
+
+# 抗 DNS 污染 
+- DOMAIN-KEYWORD,shadowsock,Auto
+- DOMAIN-KEYWORD,amazon,Auto
+- DOMAIN-KEYWORD,google,Auto
+- DOMAIN-KEYWORD,gmail,Auto
+- DOMAIN-KEYWORD,youtube,Auto
+- DOMAIN-KEYWORD,facebook,Auto
+- DOMAIN-SUFFIX,fb.me,Auto
+- DOMAIN-SUFFIX,fbcdn.net,Auto
+- DOMAIN-KEYWORD,twitter,Auto
+- DOMAIN-KEYWORD,instagram,Auto
+- DOMAIN-KEYWORD,dropbox,Auto
+- DOMAIN-SUFFIX,twimg.com,Auto
+- DOMAIN-KEYWORD,blogspot,Auto
+- DOMAIN-SUFFIX,youtu.be,Auto
+- DOMAIN-KEYWORD,whatsapp,Auto
+
+# 常见广告域名屏蔽
+- DOMAIN-KEYWORD,admarvel,REJECT
+- DOMAIN-KEYWORD,admaster,REJECT
+- DOMAIN-KEYWORD,adsage,REJECT
+- DOMAIN-KEYWORD,adsmogo,REJECT
+- DOMAIN-KEYWORD,adsrvmedia,REJECT
+- DOMAIN-KEYWORD,adwords,REJECT
+- DOMAIN-KEYWORD,adservice,REJECT
+- DOMAIN-KEYWORD,domob,REJECT
+- DOMAIN-KEYWORD,duomeng,REJECT
+- DOMAIN-KEYWORD,dwtrack,REJECT
+- DOMAIN-KEYWORD,guanggao,REJECT
+- DOMAIN-KEYWORD,lianmeng,REJECT
+- DOMAIN-SUFFIX,mmstat.com,REJECT
+- DOMAIN-KEYWORD,omgmta,REJECT
+- DOMAIN-KEYWORD,openx,REJECT
+- DOMAIN-KEYWORD,partnerad,REJECT
+- DOMAIN-KEYWORD,pingfore,REJECT
+- DOMAIN-KEYWORD,supersonicads,REJECT
+- DOMAIN-KEYWORD,tracking,REJECT
+- DOMAIN-KEYWORD,uedas,REJECT
+- DOMAIN-KEYWORD,umeng,REJECT
+- DOMAIN-KEYWORD,usage,REJECT
+- DOMAIN-KEYWORD,wlmonitor,REJECT
+- DOMAIN-KEYWORD,zjtoolbar,REJECT
+
+# 国外网站
+- DOMAIN-SUFFIX,9to5mac.com,Auto
+- DOMAIN-SUFFIX,abpchina.org,Auto
+- DOMAIN-SUFFIX,adblockplus.org,Auto
+- DOMAIN-SUFFIX,adobe.com,Auto
+- DOMAIN-SUFFIX,alfredapp.com,Auto
+- DOMAIN-SUFFIX,amplitude.com,Auto
+- DOMAIN-SUFFIX,ampproject.org,Auto
+- DOMAIN-SUFFIX,android.com,Auto
+- DOMAIN-SUFFIX,angularjs.org,Auto
+- DOMAIN-SUFFIX,aolcdn.com,Auto
+- DOMAIN-SUFFIX,apkpure.com,Auto
+- DOMAIN-SUFFIX,appledaily.com,Auto
+- DOMAIN-SUFFIX,appshopper.com,Auto
+- DOMAIN-SUFFIX,appspot.com,Auto
+- DOMAIN-SUFFIX,arcgis.com,Auto
+- DOMAIN-SUFFIX,archive.org,Auto
+- DOMAIN-SUFFIX,armorgames.com,Auto
+- DOMAIN-SUFFIX,aspnetcdn.com,Auto
+- DOMAIN-SUFFIX,att.com,Auto
+- DOMAIN-SUFFIX,awsstatic.com,Auto
+- DOMAIN-SUFFIX,azureedge.net,Auto
+- DOMAIN-SUFFIX,azurewebsites.net,Auto
+- DOMAIN-SUFFIX,bing.com,Auto
+- DOMAIN-SUFFIX,bintray.com,Auto
+- DOMAIN-SUFFIX,bit.com,Auto
+- DOMAIN-SUFFIX,bit.ly,Auto
+- DOMAIN-SUFFIX,bitbucket.org,Auto
+- DOMAIN-SUFFIX,bjango.com,Auto
+- DOMAIN-SUFFIX,bkrtx.com,Auto
+- DOMAIN-SUFFIX,blog.com,Auto
+- DOMAIN-SUFFIX,blogcdn.com,Auto
+- DOMAIN-SUFFIX,blogger.com,Auto
+- DOMAIN-SUFFIX,blogsmithmedia.com,Auto
+- DOMAIN-SUFFIX,blogspot.com,Auto
+- DOMAIN-SUFFIX,blogspot.hk,Auto
+- DOMAIN-SUFFIX,bloomberg.com,Auto
+- DOMAIN-SUFFIX,box.com,Auto
+- DOMAIN-SUFFIX,box.net,Auto
+- DOMAIN-SUFFIX,cachefly.net,Auto
+- DOMAIN-SUFFIX,chromium.org,Auto
+- DOMAIN-SUFFIX,cl.ly,Auto
+- DOMAIN-SUFFIX,cloudflare.com,Auto
+- DOMAIN-SUFFIX,cloudfront.net,Auto
+- DOMAIN-SUFFIX,cloudmagic.com,Auto
+- DOMAIN-SUFFIX,cmail19.com,Auto
+- DOMAIN-SUFFIX,cnet.com,Auto
+- DOMAIN-SUFFIX,cocoapods.org,Auto
+- DOMAIN-SUFFIX,comodoca.com,Auto
+- DOMAIN-SUFFIX,crashlytics.com,Auto
+- DOMAIN-SUFFIX,culturedcode.com,Auto
+- DOMAIN-SUFFIX,d.pr,Auto
+- DOMAIN-SUFFIX,danilo.to,Auto
+- DOMAIN-SUFFIX,dayone.me,Auto
+- DOMAIN-SUFFIX,db.tt,Auto
+- DOMAIN-SUFFIX,deskconnect.com,Auto
+- DOMAIN-SUFFIX,disq.us,Auto
+- DOMAIN-SUFFIX,disqus.com,Auto
+- DOMAIN-SUFFIX,disquscdn.com,Auto
+- DOMAIN-SUFFIX,dnsimple.com,Auto
+- DOMAIN-SUFFIX,docker.com,Auto
+- DOMAIN-SUFFIX,dribbble.com,Auto
+- DOMAIN-SUFFIX,droplr.com,Auto
+- DOMAIN-SUFFIX,duckduckgo.com,Auto
+- DOMAIN-SUFFIX,dueapp.com,Auto
+- DOMAIN-SUFFIX,dytt8.net,Auto
+- DOMAIN-SUFFIX,edgecastcdn.net,Auto
+- DOMAIN-SUFFIX,edgekey.net,Auto
+- DOMAIN-SUFFIX,edgesuite.net,Auto
+- DOMAIN-SUFFIX,engadget.com,Auto
+- DOMAIN-SUFFIX,entrust.net,Auto
+- DOMAIN-SUFFIX,eurekavpt.com,Auto
+- DOMAIN-SUFFIX,evernote.com,Auto
+- DOMAIN-SUFFIX,fabric.io,Auto
+- DOMAIN-SUFFIX,fast.com,Auto
+- DOMAIN-SUFFIX,fastly.net,Auto
+- DOMAIN-SUFFIX,fc2.com,Auto
+- DOMAIN-SUFFIX,feedburner.com,Auto
+- DOMAIN-SUFFIX,feedly.com,Auto
+- DOMAIN-SUFFIX,feedsportal.com,Auto
+- DOMAIN-SUFFIX,fiftythree.com,Auto
+- DOMAIN-SUFFIX,firebaseio.com,Auto
+- DOMAIN-SUFFIX,flexibits.com,Auto
+- DOMAIN-SUFFIX,flickr.com,Auto
+- DOMAIN-SUFFIX,flipboard.com,Auto
+- DOMAIN-SUFFIX,g.co,Auto
+- DOMAIN-SUFFIX,gabia.net,Auto
+- DOMAIN-SUFFIX,geni.us,Auto
+- DOMAIN-SUFFIX,gfx.ms,Auto
+- DOMAIN-SUFFIX,ggpht.com,Auto
+- DOMAIN-SUFFIX,ghostnoteapp.com,Auto
+- DOMAIN-SUFFIX,git.io,Auto
+- DOMAIN-KEYWORD,github,Auto
+- DOMAIN-SUFFIX,globalsign.com,Auto
+- DOMAIN-SUFFIX,gmodules.com,Auto
+- DOMAIN-SUFFIX,godaddy.com,Auto
+- DOMAIN-SUFFIX,golang.org,Auto
+- DOMAIN-SUFFIX,gongm.in,Auto
+- DOMAIN-SUFFIX,goo.gl,Auto
+- DOMAIN-SUFFIX,goodreaders.com,Auto
+- DOMAIN-SUFFIX,goodreads.com,Auto
+- DOMAIN-SUFFIX,gravatar.com,Auto
+- DOMAIN-SUFFIX,gstatic.com,Auto
+- DOMAIN-SUFFIX,gvt0.com,Auto
+- DOMAIN-SUFFIX,hockeyapp.net,Auto
+- DOMAIN-SUFFIX,hotmail.com,Auto
+- DOMAIN-SUFFIX,icons8.com,Auto
+- DOMAIN-SUFFIX,ifixit.com,Auto
+- DOMAIN-SUFFIX,ift.tt,Auto
+- DOMAIN-SUFFIX,ifttt.com,Auto
+- DOMAIN-SUFFIX,iherb.com,Auto
+- DOMAIN-SUFFIX,imageshack.us,Auto
+- DOMAIN-SUFFIX,img.ly,Auto
+- DOMAIN-SUFFIX,imgur.com,Auto
+- DOMAIN-SUFFIX,imore.com,Auto
+- DOMAIN-SUFFIX,instapaper.com,Auto
+- DOMAIN-SUFFIX,ipn.li,Auto
+- DOMAIN-SUFFIX,is.gd,Auto
+- DOMAIN-SUFFIX,issuu.com,Auto
+- DOMAIN-SUFFIX,itgonglun.com,Auto
+- DOMAIN-SUFFIX,itun.es,Auto
+- DOMAIN-SUFFIX,ixquick.com,Auto
+- DOMAIN-SUFFIX,j.mp,Auto
+- DOMAIN-SUFFIX,js.revsci.net,Auto
+- DOMAIN-SUFFIX,jshint.com,Auto
+- DOMAIN-SUFFIX,jtvnw.net,Auto
+- DOMAIN-SUFFIX,justgetflux.com,Auto
+- DOMAIN-SUFFIX,kat.cr,Auto
+- DOMAIN-SUFFIX,klip.me,Auto
+- DOMAIN-SUFFIX,libsyn.com,Auto
+- DOMAIN-SUFFIX,linode.com,Auto
+- DOMAIN-SUFFIX,lithium.com,Auto
+- DOMAIN-SUFFIX,littlehj.com,Auto
+- DOMAIN-SUFFIX,live.com,Auto
+- DOMAIN-SUFFIX,live.net,Auto
+- DOMAIN-SUFFIX,livefilestore.com,Auto
+- DOMAIN-SUFFIX,llnwd.net,Auto
+- DOMAIN-SUFFIX,macid.co,Auto
+- DOMAIN-SUFFIX,macromedia.com,Auto
+- DOMAIN-SUFFIX,macrumors.com,Auto
+- DOMAIN-SUFFIX,mashable.com,Auto
+- DOMAIN-SUFFIX,mathjax.org,Auto
+- DOMAIN-SUFFIX,medium.com,Auto
+- DOMAIN-SUFFIX,mega.co.nz,Auto
+- DOMAIN-SUFFIX,mega.nz,Auto
+- DOMAIN-SUFFIX,megaupload.com,Auto
+- DOMAIN-SUFFIX,microsofttranslator.com,Auto
+- DOMAIN-SUFFIX,mindnode.com,Auto
+- DOMAIN-SUFFIX,mobile01.com,Auto
+- DOMAIN-SUFFIX,modmyi.com,Auto
+- DOMAIN-SUFFIX,msedge.net,Auto
+- DOMAIN-SUFFIX,myfontastic.com,Auto
+- DOMAIN-SUFFIX,name.com,Auto
+- DOMAIN-SUFFIX,nextmedia.com,Auto
+- DOMAIN-SUFFIX,nsstatic.net,Auto
+- DOMAIN-SUFFIX,nssurge.com,Auto
+- DOMAIN-SUFFIX,nyt.com,Auto
+- DOMAIN-SUFFIX,nytimes.com,Auto
+- DOMAIN-SUFFIX,omnigroup.com,Auto
+- DOMAIN-SUFFIX,onedrive.com,Auto
+- DOMAIN-SUFFIX,onenote.com,Auto
+- DOMAIN-SUFFIX,ooyala.com,Auto
+- DOMAIN-SUFFIX,openvpn.net,Auto
+- DOMAIN-SUFFIX,openwrt.org,Auto
+- DOMAIN-SUFFIX,orkut.com,Auto
+- DOMAIN-SUFFIX,osxdaily.com,Auto
+- DOMAIN-SUFFIX,outlook.com,Auto
+- DOMAIN-SUFFIX,ow.ly,Auto
+- DOMAIN-SUFFIX,paddleapi.com,Auto
+- DOMAIN-SUFFIX,parallels.com,Auto
+- DOMAIN-SUFFIX,parse.com,Auto
+- DOMAIN-SUFFIX,pdfexpert.com,Auto
+- DOMAIN-SUFFIX,periscope.tv,Auto
+- DOMAIN-SUFFIX,pinboard.in,Auto
+- DOMAIN-SUFFIX,pinterest.com,Auto
+- DOMAIN-SUFFIX,pixelmator.com,Auto
+- DOMAIN-SUFFIX,pixiv.net,Auto
+- DOMAIN-SUFFIX,playpcesor.com,Auto
+- DOMAIN-SUFFIX,playstation.com,Auto
+- DOMAIN-SUFFIX,playstation.com.hk,Auto
+- DOMAIN-SUFFIX,playstation.net,Auto
+- DOMAIN-SUFFIX,playstationnetwork.com,Auto
+- DOMAIN-SUFFIX,pushwoosh.com,Auto
+- DOMAIN-SUFFIX,rime.im,Auto
+- DOMAIN-SUFFIX,servebom.com,Auto
+- DOMAIN-SUFFIX,sfx.ms,Auto
+- DOMAIN-SUFFIX,shadowsocks.org,Auto
+- DOMAIN-SUFFIX,sharethis.com,Auto
+- DOMAIN-SUFFIX,shazam.com,Auto
+- DOMAIN-SUFFIX,skype.com,Auto
+- DOMAIN-SUFFIX,smartdnsAuto.com,Auto
+- DOMAIN-SUFFIX,smartmailcloud.com,Auto
+- DOMAIN-SUFFIX,sndcdn.com,Auto
+- DOMAIN-SUFFIX,sony.com,Auto
+- DOMAIN-SUFFIX,soundcloud.com,Auto
+- DOMAIN-SUFFIX,sourceforge.net,Auto
+- DOMAIN-SUFFIX,spotify.com,Auto
+- DOMAIN-SUFFIX,squarespace.com,Auto
+- DOMAIN-SUFFIX,sstatic.net,Auto
+- DOMAIN-SUFFIX,st.luluku.pw,Auto
+- DOMAIN-SUFFIX,stackoverflow.com,Auto
+- DOMAIN-SUFFIX,startpage.com,Auto
+- DOMAIN-SUFFIX,staticflickr.com,Auto
+- DOMAIN-SUFFIX,steamcommunity.com,Auto
+- DOMAIN-SUFFIX,symauth.com,Auto
+- DOMAIN-SUFFIX,symcb.com,Auto
+- DOMAIN-SUFFIX,symcd.com,Auto
+- DOMAIN-SUFFIX,tapbots.com,Auto
+- DOMAIN-SUFFIX,tapbots.net,Auto
+- DOMAIN-SUFFIX,tdesktop.com,Auto
+- DOMAIN-SUFFIX,techcrunch.com,Auto
+- DOMAIN-SUFFIX,techsmith.com,Auto
+- DOMAIN-SUFFIX,thepiratebay.org,Auto
+- DOMAIN-SUFFIX,theverge.com,Auto
+- DOMAIN-SUFFIX,time.com,Auto
+- DOMAIN-SUFFIX,timeinc.net,Auto
+- DOMAIN-SUFFIX,tiny.cc,Auto
+- DOMAIN-SUFFIX,tinypic.com,Auto
+- DOMAIN-SUFFIX,tmblr.co,Auto
+- DOMAIN-SUFFIX,todoist.com,Auto
+- DOMAIN-SUFFIX,trello.com,Auto
+- DOMAIN-SUFFIX,trustasiassl.com,Auto
+- DOMAIN-SUFFIX,tumblr.co,Auto
+- DOMAIN-SUFFIX,tumblr.com,Auto
+- DOMAIN-SUFFIX,tweetdeck.com,Auto
+- DOMAIN-SUFFIX,tweetmarker.net,Auto
+- DOMAIN-SUFFIX,twitch.tv,Auto
+- DOMAIN-SUFFIX,txmblr.com,Auto
+- DOMAIN-SUFFIX,typekit.net,Auto
+- DOMAIN-SUFFIX,ubertags.com,Auto
+- DOMAIN-SUFFIX,ublock.org,Auto
+- DOMAIN-SUFFIX,ubnt.com,Auto
+- DOMAIN-SUFFIX,ulyssesapp.com,Auto
+- DOMAIN-SUFFIX,urchin.com,Auto
+- DOMAIN-SUFFIX,usertrust.com,Auto
+- DOMAIN-SUFFIX,v.gd,Auto
+- DOMAIN-SUFFIX,v2ex.com,Auto
+- DOMAIN-SUFFIX,vimeo.com,Auto
+- DOMAIN-SUFFIX,vimeocdn.com,Auto
+- DOMAIN-SUFFIX,vine.co,Auto
+- DOMAIN-SUFFIX,vivaldi.com,Auto
+- DOMAIN-SUFFIX,vox-cdn.com,Auto
+- DOMAIN-SUFFIX,vsco.co,Auto
+- DOMAIN-SUFFIX,vultr.com,Auto
+- DOMAIN-SUFFIX,w.org,Auto
+- DOMAIN-SUFFIX,w3schools.com,Auto
+- DOMAIN-SUFFIX,webtype.com,Auto
+- DOMAIN-SUFFIX,wikiwand.com,Auto
+- DOMAIN-SUFFIX,wikileaks.org,Auto
+- DOMAIN-SUFFIX,wikimedia.org,Auto
+- DOMAIN-SUFFIX,wikipedia.com,Auto
+- DOMAIN-SUFFIX,wikipedia.org,Auto
+- DOMAIN-SUFFIX,windows.com,Auto
+- DOMAIN-SUFFIX,windows.net,Auto
+- DOMAIN-SUFFIX,wire.com,Auto
+- DOMAIN-SUFFIX,wordpress.com,Auto
+- DOMAIN-SUFFIX,workflowy.com,Auto
+- DOMAIN-SUFFIX,wp.com,Auto
+- DOMAIN-SUFFIX,wsj.com,Auto
+- DOMAIN-SUFFIX,wsj.net,Auto
+- DOMAIN-SUFFIX,xda-developers.com,Auto
+- DOMAIN-SUFFIX,xeeno.com,Auto
+- DOMAIN-SUFFIX,xiti.com,Auto
+- DOMAIN-SUFFIX,yahoo.com,Auto
+- DOMAIN-SUFFIX,yimg.com,Auto
+- DOMAIN-SUFFIX,ying.com,Auto
+- DOMAIN-SUFFIX,yoyo.org,Auto
+- DOMAIN-SUFFIX,ytimg.com,Auto
+
+# Telegram
+- DOMAIN-SUFFIX,telegra.ph,Auto
+- DOMAIN-SUFFIX,telegram.org,Auto
+
+- IP-CIDR,91.108.56.0/22,Auto
+- IP-CIDR,91.108.4.0/22,Auto
+- IP-CIDR,91.108.8.0/22,Auto
+- IP-CIDR,109.239.140.0/24,Auto
+- IP-CIDR,149.154.160.0/20,Auto
+- IP-CIDR,149.154.164.0/22,Auto
+
+# LAN
+- DOMAIN-SUFFIX,local,DIRECT
+- IP-CIDR,127.0.0.0/8,DIRECT
+- IP-CIDR,172.16.0.0/12,DIRECT
+- IP-CIDR,192.168.0.0/16,DIRECT
+- IP-CIDR,10.0.0.0/8,DIRECT
+- IP-CIDR,17.0.0.0/8,DIRECT
+- IP-CIDR,100.64.0.0/10,DIRECT
+
+# 最终规则
+- GEOIP,CN,DIRECT
+- MATCH,Proxy
